@@ -153,6 +153,7 @@ function populate(questions, questionContainer, answerContainer, submitBtn) {
     submitBtn.onclick = function () {
         results(questions, questionContainer, answerContainer);
         clearInterval(intervalId);
+        setTimeout(function(){ alert("Refresh to play again!"); }, 3000);
     }
 
 }
