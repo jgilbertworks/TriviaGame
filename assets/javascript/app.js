@@ -61,7 +61,7 @@ function populate(questions, questionContainer, answerContainer, submitBtn) {
     function showQuestions(questions, questionContainer) {
         let output = [];
         let answers;
-        
+
         for (let index = 0; index < questions.length; index++) {
             answers = [];
 
@@ -119,42 +119,41 @@ function populate(questions, questionContainer, answerContainer, submitBtn) {
     // Declare the decrement function
     function decrement() {
 
-    // decrement the number by 1
-    timeRemaining--;
+        // decrement the number by 1
+        timeRemaining--;
 
-    // show the number in the #timer 
+        // show the number in the #timer 
 
-    $("#timer").html(timeRemaining);
-    console.log(timeRemaining)
+        $("#timer").html(timeRemaining);
+        console.log(timeRemaining)
 
-    // if the number hits zero...
-    if (timeRemaining === 0) {
+        // if the number hits zero...
+        if (timeRemaining === 0) {
 
-        // run stop function
-        stop();
+            // run stop function
+            stop();
 
-        // Alert user that time is up
-        alert("Time is up!");
-        
-        console.log("time is up");
-    }
-}
+            // Alert user that time is up
+            alert("Time is up!");
 
-// the stop function
-function stop() {
-
-    // Clear the interval
-    clearInterval(intervalId);
-}
-        // displays questions
-        showQuestions(questions, questionContainer);
-
-        // shows results
-        submitBtn.onclick = function () {
-            results(questions, questionContainer, answerContainer);
-            clearInterval(intervalId);
+            console.log("time is up");
         }
-            
     }
 
-    
+    // the stop function
+    function stop() {
+
+        // Clear the interval
+        clearInterval(intervalId);
+    }
+    // displays questions
+    showQuestions(questions, questionContainer);
+
+    // shows results
+    submitBtn.onclick = function () {
+        results(questions, questionContainer, answerContainer);
+        clearInterval(intervalId);
+    }
+
+}
+
