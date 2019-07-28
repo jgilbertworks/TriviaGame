@@ -1,95 +1,123 @@
-// Create array to store game info
+// // Create array to store game info
+
 let gameArray = [
-
     {
-
-        question: 'What year was the first Jurrassic Park filmed?',
-        answer: [
-            '1990',
-            '1993',
-            '1995'
-        ],
-        id: 'question-one',
-        correct: '0'
-
-    },
-
-    {
-
-        question: 'How much did the film gross worldwide?',
-        answer: [
-            '$357,000,000',
-            '$375,000',
-            '$1,525,000'
-        ],
-        id: 'question-two',
-        correct: '0'
-
+        question: "What year was the first Jurrassic Park filmed?",
+        answers: {
+            a: '1990',
+            b: '1993',
+            c: '1995'
+        },
+        correctAnswer: 'c'
     },
     {
-
-        question: 'Who directed Jurrassic Park?',
-        answer: [
-            'Steven Soderberg',
-            'Steven Spielberg',
-            'Stephen King'
-        ],
-        id: 'question-three',
-        correct: '1'
-
+        question: "How much did the film gross worldwide?",
+        answers: {
+            a: '$357,000,000',
+            b: '$375,000',
+            c: '$1,525,000'
+        },
+        correctAnswer: 'a'
     },
     {
-
-        question: 'How heavy was the animatronic T-rex?',
-        answer: [
-            '1200lbs',
-            '500lbs',
-            '5000lbs',
-        ],
-        id: 'question-four',
-        correct: '0'
-
+        question: "Who directed Jurrassic Park",
+        answers: {
+            a: 'Steven Soderberg',
+            b: 'Steven Spielberg',
+            c: 'Stephen King'
+        },
+        correctAnswer: 'c'
     },
     {
-
-        question: 'In total, how long did dinosaurs appear in the film?',
-        answer: [
-            '30mins',
-            '45mins',
-            '15mins'
-        ],
-        id: 'question-five',
-        correct: '2'
-
+        question: "In total, how long did dinosaurs appear in the film?",
+        answers: {
+            a: '30mins',
+            b: '45mins',
+            c: '15mins'
+        },
+        correctAnswer: 'c'
+    },
+    {
+        question: "How heavy was the animatronic T-rex?",
+        answers: {
+            a: '1200lbs',
+            b: '500lbs',
+            c: '5000lbs'
+        },
+        correctAnswer: 'a'
     }
 
-]
-
-// Begin game by clicking the start button
-
-$("#start").on("click", function () {
-    $('.wrapper').show();
-    // This will log "Game Begins" when the start button is clicked
-    console.log('Game Begins!');
-});
+];
 
 
-// Create variable for timer
+let questionContainer = document.getElementById('question_container');
+let answerContainer = document.getElementById('results');
+let submitBtn = document.getElementById('submit');
 
-let timeRemaining = 30; // sets timer to 30 
-let intervalId; // varibale that hold the interval ID when the run functio is executed
-console.log(timeRemaining);
+populate(gameArray, questionContainer, answerContainer, submitBtn);
 
-function run() {
-    clearInterval(intervalId);
-    intervalId = setInterval(decrement, 1000);
-}
+function populate(questions, questionContainer, answerContainer, submitBtn) {
 
-// When the start button is clicked, execute the run function
-$("#start").on("click", run);
+    function showQuestions(questions, questionContainer) {
+        let output = [];
+        let answers;
+        
+        for (let index = 0; index < questions.length; index++) {
+            answers = [];
 
-// Declare the decrement function
-function decrement() {
+            for (letter in questions[index].answers) {
+
+                answers.push(
+                    '<label>'
+                    + '<input type="radio" name="question' + index + '" value="' + letter + '">'
+                    + letter + ': '
+                    + questions[index].answers[letter]
+                    + '</label>'
+                );
+            }
+            output.push(
+                '<div class="question">' + questions[index].question + '</div>'
+                + '<div class="answers">' + answers.join('') + '</div>'
+            );
+        }
+        questionContainer.innerHTML = output.join('');
+    }
+
+    // create function show the tally of correct answers
+    function results(questions, questionContainer, answerContainer) {
+        let answerContainers = questionContainer.querySelectorAll('.answers');
+
+        let userAnswer = '';
+        let numCorrect = 0;
+
+        for (let index = 0; index < questions.length; index++) {
+            userAnswer = (answerContainers[index].querySelector('input[name=question' + index + ']:checked') || {}).value;
+            if (userAnswer === questions[index].correctAnswer) {
+                numCorrect++;
+                answerContainers[index].style.color = 'lightgreen';
+            } else {
+                answerContainers[index].style.color = 'red';
+            }
+        }
+
+        answerContainer.innerHTML = numCorrect + ' out of ' + questions.length;
+    }
+
+    // Create variable for timer
+
+    let timeRemaining = 30; // sets timer to 30 
+    let intervalId; // varibale that hold the interval ID when the run functio is executed
+    console.log(timeRemaining);
+
+    function run() {
+        clearInterval(intervalId);
+        intervalId = setInterval(decrement, 1000);
+    }
+    // When the start button is clicked, execute the run function
+    $("#start").on("click", run);
+
+    // Declare the decrement function
+    function decrement() {
 
     // decrement the number by 1
     timeRemaining--;
@@ -107,6 +135,7 @@ function decrement() {
 
         // Alert user that time is up
         alert("Time is up!");
+        
         console.log("time is up");
     }
 }
@@ -116,71 +145,16 @@ function stop() {
 
     // Clear the interval
     clearInterval(intervalId);
-
 }
+        // displays questions
+        showQuestions(questions, questionContainer);
 
-let questionContainer = document.getElementById('question_container');
-
-// Grab the id of the div on the page
-// Push the value of the gameobject answer array into that div
-// give it a text value
-// Save the right answer in a variable
-
-function populate() {
-
-    let answerDiv;
-    let questionDiv;
-    let answerText;
-    let questionTitle;
-
-    for (index = 0; index < gameArray.length; index++) {
-        questionDiv = $('<div>');
-        questionTitle = $('<div>').text(gameArray[index].question);
-        $(questionContainer).append(questionTitle);
-        console.log(questionTitle)
-
-        answerDiv = $('<div>');
-        for (j = 0; j < gameArray[index].answer.length; j++) {
-            answerText = $('<div>').text(gameArray[index].answer[j]);
-
-            $(answerDiv).append("<input type='checkbox' name='question-" + index + "' value'" + gameArray[index].answer[j] + "'>");
-            $(answerDiv).append(answerText);
+        // shows results
+        submitBtn.onclick = function () {
+            results(questions, questionContainer, answerContainer);
+            clearInterval(intervalId);
+        }
             
-        }
-
-        $(questionDiv).append(answerDiv);
-        $(questionContainer).append(questionDiv);
-        console.log(questionTitle);
-        console.log(answerText);
-    }
-}
-populate();
-
-
-for(let index = 0; index < gameArray.length; index++) {
-    if (isCorrect(gameArray.question[index])) {
-        correct++;
-    } else {
-        if(checkAnswered(gameArray.question[index])){
-            incorrect++;
-        } else {
-            unAnswered++;
-        }
     }
 
-$('.results').html('correct: '+correct+ "<br>" +'incorrect: '+incorrect+ "<br>" +'unanswered: '+unAnswered);
-
-}
-
-
-
- // when an answer is clicked
-        // grab the one that was clicked and it's value
-        // check against the correct answer
-        // increment correct or incorrect
-        // move to next question
-
-// We start the game with a score of 0.
-let score = 0;
-// Variable to hold the index of current question.
-let questionIndex = 0;
+    
