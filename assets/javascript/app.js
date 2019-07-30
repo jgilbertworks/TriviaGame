@@ -8,7 +8,7 @@ let gameArray = [
             b: '1993',
             c: '1995'
         },
-        correctAnswer: 'c'
+        correctAnswer: 'b'
     },
     {
         question: "How much did the film gross worldwide?",
@@ -26,7 +26,7 @@ let gameArray = [
             b: 'Steven Spielberg',
             c: 'Stephen King'
         },
-        correctAnswer: 'c'
+        correctAnswer: 'b'
     },
     {
         question: "In total, how long did dinosaurs appear in the film?",
