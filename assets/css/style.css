@@ -63,7 +63,7 @@ h2 {
     color: maroon;
     font-size: 30px;
     text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-/*     font-family: 'Londrina Shadow', cursive; */
+    font-family: 'Londrina Shadow', cursive;
     text-align: center;
 }
 #submit{
